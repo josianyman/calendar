@@ -1,0 +1,40 @@
+extend type Query {
+    resource(id: ID!): CalendarResource!
+}
+
+extend type Mutation {
+    resourceCreate(input: ResourceCreateInput!): CalendarResource!
+}
+
+input ResourceCreateInput {
+    name: String!
+    description: String!
+    timezone: String!
+    capacity: Int!
+}
+
+"Calendar resource"
+type CalendarResource {
+    auditLog: AuditLog!
+    availability(input: ResourceAvailabilityInput!): [CalendarResourceAvailabilitySlot!]!
+    capacity: Int!
+    description: String!
+    id: ID!
+    name: String!
+    timezone: String!
+}
+
+input ResourceAvailabilityInput {
+    "Default: start plus one day"
+    end: LocalDateTime
+     "Minutes, default 15 min"
+    slotSize: Int
+    start: LocalDateTime!
+}
+
+type CalendarResourceAvailabilitySlot {
+    available: Int!
+    end: LocalDateTime!
+    offset: Int!
+    start: LocalDateTime!
+}

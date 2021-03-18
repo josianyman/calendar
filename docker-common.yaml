@@ -1,0 +1,19 @@
+version: '2.4'
+
+services:
+
+  postgresql:
+    image: postgres:12.2
+    environment:
+      #- DUMP_FILE
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=fer45wetp4
+      - POSTGRES_DB=project
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - project
+
+networks:
+  project:
+    driver: bridge

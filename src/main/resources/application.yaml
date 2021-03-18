@@ -1,0 +1,39 @@
+spring:
+    application.name: project
+
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+
+    datasource:
+        initialization-mode: always
+        url: jdbc:postgresql://localhost:5432/project
+        username: user
+        password: fer45wetp4
+        platform: postgresql
+
+    jpa:
+        open-in-view: false
+        properties.hibernate:
+            jdbc.lob.non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
+            physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
+            ddl-auto: none
+
+    flyway:
+        locations: classpath:db/migration
+
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: false
+    exception-handlers-enabled: true
+  tools:
+    introspection-enabled: true
+  datetime:
+    scalars:
+      localDateTime:
+        format: yyyy-MM-dd'T'HH:mm:ss
+      localTime:
+        format: HH:mm:ss
+

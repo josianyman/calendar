@@ -1,0 +1,27 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {}
+type Mutation {}
+
+"Format yyyy-MM-dd"
+scalar LocalDate
+
+"Format yyyy-MM-ddTHH:mm:ss"
+scalar LocalDateTime
+
+"Format yyyy-MM-ddTHH:mm:ssZ"
+scalar Timestamp
+
+type AuditLog {
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
+}
+
+
+
+
+
+

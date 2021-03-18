@@ -1,0 +1,73 @@
+extend type Query {
+    reservation(id: ID!): CalendarReservation!
+    reservationsByDateAndResource(input: ReservationsByDateAndResourceInput!): [CalendarReservation!]!
+}
+
+extend type Mutation {
+    reservationCreate(input: ReservationCreateInput!): CalendarReservation!
+    reservationConfirm(id: ID!): CalendarReservation!
+    reservationCancel(id: ID!): CalendarReservation!
+    reservationSetTimes(input: ReservationSetTimesInput!): CalendarReservation!
+    reservationSetResource(input: ReservationSetResourceInput!): CalendarReservation!
+    reservationSetName(input: ReservationSetNameInput!): CalendarReservation!
+    reservationDelete(id: ID!): CalendarReservationDeletePayload!
+}
+
+input ReservationsByDateAndResourceInput {
+    date: LocalDate!
+    resourceId: ID!
+}
+
+input ReservationCreateInput {
+    resourceId: ID!
+    name: String
+    "inclusive"
+    start: LocalDateTime!
+    "exclusive"
+    end: LocalDateTime!
+    quantity: Int = 1
+}
+
+
+input ReservationSetTimesInput {
+    reservationId: ID!
+    start: LocalDateTime!
+    end: LocalDateTime!
+}
+
+input ReservationSetResourceInput {
+    reservationId: ID!
+    resourceId: ID!
+    quantity: Int!
+}
+
+input ReservationSetNameInput {
+    reservationId: ID!
+    name: String
+}
+
+type CalendarReservationDeletePayload {
+    id: ID!
+    deleted: Boolean!
+}
+
+enum ReservationState {
+    DRAFT
+    CONFIRMED
+    CANCELLED
+}
+
+"Calendar reservation"
+type CalendarReservation {
+    id: ID!
+    state: ReservationState!
+
+    name: String
+    start: LocalDateTime!
+    end: LocalDateTime!
+
+    resourceQuantity: Int!
+    resource: CalendarResource
+
+    auditLog: AuditLog!
+}
