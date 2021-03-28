@@ -52,13 +52,13 @@ data class ReservationCreateInput(
     override val name: String?,
     override val start: LocalDateTime,
     override val end: LocalDateTime,
-    override val quantity: Int?,
+    override val resourceQuantity: Int?,
 ) : ReservationCreate
 
 data class ReservationSetResourceInput(
     override val reservationId: UUID,
     override val resourceId: UUID,
-    override val quantity: Int,
+    override val resourceQuantity: Int,
 ) : ReservationSetResource
 
 data class ReservationSetNameInput(

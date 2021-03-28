@@ -25,30 +25,35 @@ class ReservationService(
 
     override fun setName(setName: ReservationSetName): Reservation {
         return get(setName.reservationId)
+            .requireNotCancelled()
             .update(setName)
             .save()
     }
 
     override fun setTimes(setTimes: ReservationSetTimes): Reservation {
         return get(setTimes.reservationId)
+            .requireNotCancelled()
             .update(setTimes)
             .save()
     }
 
     override fun setResource(setResource: ReservationSetResource): Reservation {
         return get(setResource.reservationId)
+            .requireNotCancelled()
             .update(setResource)
             .save()
     }
 
     override fun confirm(id: UUID): Reservation {
         return get(id)
+            .requireDraftState()
             .confirm()
             .save()
     }
 
     override fun cancel(id: UUID): Reservation {
         return get(id)
+            .requireNotCancelled()
             .cancel()
             .save()
     }

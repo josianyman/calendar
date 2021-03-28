@@ -1,26 +1,26 @@
 spring:
-    application.name: project
+  application.name: project
 
-    jackson:
-      serialization:
-        write-dates-as-timestamps: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
-    datasource:
-        initialization-mode: always
-        url: jdbc:postgresql://localhost:5432/project
-        username: user
-        password: fer45wetp4
-        platform: postgresql
+  datasource:
+    initialization-mode: always
+    url: jdbc:postgresql://localhost:5432/project
+    username: user
+    password: fer45wetp4
+    platform: postgresql
 
-    jpa:
-        open-in-view: false
-        properties.hibernate:
-            jdbc.lob.non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
-            physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
-            ddl-auto: none
+  jpa:
+    open-in-view: false
+    properties.hibernate:
+      jdbc.lob.non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
+      physical_naming_strategy: com.vladmihalcea.hibernate.type.util.CamelCaseToSnakeCaseNamingStrategy
+      ddl-auto: none
 
-    flyway:
-        locations: classpath:db/migration
+  flyway:
+    locations: classpath:db/migration
 
 graphql:
   servlet:

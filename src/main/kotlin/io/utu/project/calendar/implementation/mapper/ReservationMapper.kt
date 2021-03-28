@@ -17,7 +17,7 @@ abstract class ReservationMapper {
         state = ReservationState.DRAFT,
         start = this.start,
         end = this.end,
-        resourceQuantity = this.quantity ?: 1,
+        resourceQuantity = this.resourceQuantity ?: 1,
         name = this.name,
     )
 
@@ -32,7 +32,7 @@ abstract class ReservationMapper {
 
     protected fun ReservationEntity.update(update: ReservationSetResource) = copy(
         resourceId = update.resourceId,
-        resourceQuantity = update.quantity,
+        resourceQuantity = update.resourceQuantity,
     )
 
     protected fun ReservationEntity.cancel() = copy(
@@ -42,6 +42,16 @@ abstract class ReservationMapper {
     protected fun ReservationEntity.confirm() = copy(
         state = ReservationState.CONFIRMED
     )
+
+    protected fun ReservationEntity.requireNotCancelled(): ReservationEntity {
+        require(state != ReservationState.CANCELLED) { "Cancelled reservation is not updatable!" }
+        return this
+    }
+
+    protected fun ReservationEntity.requireDraftState(): ReservationEntity {
+        require(state == ReservationState.DRAFT) { "Only draft reservation could be confirmed!" }
+        return this
+    }
 
     protected fun ReservationEntity.save() = repository.save(this)
     protected fun get(id: UUID) = repository.getOne(id)

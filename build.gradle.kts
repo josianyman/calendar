@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.utu"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -46,7 +46,10 @@ dependencies {
 
     // Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0")
     testImplementation("org.assertj:assertj-core:3.19.0")
+    testImplementation("org.testcontainers:junit-jupiter:1.15.1")
+    testImplementation("org.testcontainers:postgresql:1.15.1")
 }
 
 tasks.withType<KotlinCompile> {
@@ -58,4 +61,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    this.archiveFileName.set("project-boot.jar")
 }

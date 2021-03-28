@@ -57,9 +57,9 @@ class ResourceAvailabilityService(
      * Returns 0 for empty list
      *
      * Time complexity of the function is O(n^2) where n is reservations count
-     * If all reservations end at the same time, complexity is O(n * log(n)) dominated by sorting of reservations
+     * If all reservations end at the same time, complexity is O(n * log(n)) dominated by sorting the reservations
      */
-    private fun maxOverlappingQuantity(reservations: List<Reservation>): Int {
+    fun maxOverlappingQuantity(reservations: List<Reservation>): Int {
         // Quantity intersections models the intersections of reservations with combined quantity
         // Field quantity is sum of reservation quantities belongs to intersection that ends at end
         // Overlapping quantities contains every different reservation intersection end after reservations for loop in executed
@@ -68,7 +68,8 @@ class ResourceAvailabilityService(
         for (reservation in reservations.sortedBy { it.start }) {
             // If reservation ends after all others, new intersection will be added
             var reservationEndIntersectionExists = false
-            // If reservation ends before any existing interval, new intersection will be added with closest existing intersection
+            // If reservation ends before any existing interval,
+            // new intersection will be added with closest existing intersection
             var reservationClosestOverlappingInterval: QuantityIntersection? = null
 
             // Update intersection quantity if reservation contributes to it
@@ -92,7 +93,8 @@ class ResourceAvailabilityService(
                         // existingIntersection is not altered:
                         // reservation does not affect quantity from reservation.end to existingIntersection.end
                         if (reservationClosestOverlappingInterval == null ||
-                            existingIntersection.end.isBefore(reservationClosestOverlappingInterval!!.end)) {
+                            existingIntersection.end.isBefore(reservationClosestOverlappingInterval!!.end)
+                        ) {
                             reservationClosestOverlappingInterval = existingIntersection
                         }
                         return@map existingIntersection
@@ -100,7 +102,9 @@ class ResourceAvailabilityService(
 
                     // Reservation ends after overlapping quantity
                     // Whole existing interval quantity will increase by reservation quantity
-                    return@map existingIntersection.copy(quantity = existingIntersection.quantity + reservation.resourceQuantity)
+                    return@map existingIntersection.copy(
+                        quantity = existingIntersection.quantity + reservation.resourceQuantity
+                    )
                 } else {
                     existingIntersection
                 }
@@ -113,12 +117,12 @@ class ResourceAvailabilityService(
             // It is either inside closest existing or after all
             if (!reservationEndIntersectionExists) {
                 if (reservationClosestOverlappingInterval != null) {
-                    val cumulativeQuantity = reservationClosestOverlappingInterval!!.quantity + reservation.resourceQuantity
+                    val cumulativeQuantity =
+                        reservationClosestOverlappingInterval!!.quantity + reservation.resourceQuantity
                     quantityIntersections.add(QuantityIntersection(reservation.end, cumulativeQuantity))
                 }
                 quantityIntersections.add(QuantityIntersection(reservation.end, reservation.resourceQuantity))
             }
-
         }
         return quantityIntersections.maxQuantity()
     }

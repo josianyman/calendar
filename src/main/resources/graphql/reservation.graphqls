@@ -25,7 +25,7 @@ input ReservationCreateInput {
     start: LocalDateTime!
     "exclusive"
     end: LocalDateTime!
-    quantity: Int = 1
+    resourceQuantity: Int = 1
 }
 
 
@@ -38,7 +38,7 @@ input ReservationSetTimesInput {
 input ReservationSetResourceInput {
     reservationId: ID!
     resourceId: ID!
-    quantity: Int!
+    resourceQuantity: Int!
 }
 
 input ReservationSetNameInput {

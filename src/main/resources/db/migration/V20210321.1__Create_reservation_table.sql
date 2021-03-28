@@ -10,3 +10,5 @@ CREATE TABLE reservation
     created_at  TIMESTAMP WITH TIME ZONE    NOT NULL,
     updated_at  TIMESTAMP WITH TIME ZONE    NOT NULL
 );
+
+CREATE INDEX reservation_times_idx on reservation(start_time, end_time, state);

@@ -80,13 +80,13 @@ interface ReservationCreate {
      * Exclusive
      */
     val end: LocalDateTime
-    val quantity: Int?
+    val resourceQuantity: Int?
 }
 
 interface ReservationSetResource {
     val reservationId: UUID
     val resourceId: UUID
-    val quantity: Int
+    val resourceQuantity: Int
 }
 
 interface ReservationSetName {
