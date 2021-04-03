@@ -6,6 +6,7 @@ import io.utu.project.calendar.api.ReservationCreate
 import io.utu.project.calendar.api.ReservationSetName
 import io.utu.project.calendar.api.ReservationSetResource
 import io.utu.project.calendar.api.ReservationSetTimes
+import io.utu.project.calendar.api.ResourceAvailabilityApi
 import io.utu.project.calendar.implementation.mapper.ReservationMapper
 import io.utu.project.calendar.implementation.repository.ReservationRepository
 import org.springframework.stereotype.Service
@@ -16,6 +17,7 @@ import java.util.UUID
 @Transactional
 class ReservationService(
     override val repository: ReservationRepository,
+    override val availabilityReader: ResourceAvailabilityApi,
 ) : ReservationApi, ReservationMapper() {
     override fun create(create: ReservationCreate): Reservation {
         return create
@@ -48,6 +50,7 @@ class ReservationService(
         return get(id)
             .requireDraftState()
             .confirm()
+            .requireResourceAvailable()
             .save()
     }
 

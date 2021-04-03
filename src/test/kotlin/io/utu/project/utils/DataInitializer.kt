@@ -3,6 +3,7 @@ package io.utu.project.utils
 import io.utu.project.calendar.api.Reservation
 import io.utu.project.calendar.api.ReservationApi
 import io.utu.project.calendar.api.Resource
+import io.utu.project.calendar.api.ResourceAvailabilityApi
 import io.utu.project.calendar.implementation.mapper.ReservationMapper
 import io.utu.project.calendar.implementation.mapper.ResourceMapper
 import io.utu.project.calendar.implementation.repository.ReservationRepository
@@ -18,6 +19,7 @@ class DataInitializer(
     private val resourceService: ResourceService,
     private val reservationApi: ReservationApi,
     override val repository: ReservationRepository,
+    override val availabilityReader: ResourceAvailabilityApi,
 ): ReservationMapper() {
     fun initResource(): Resource {
         return resourceService.create(CREATE_RESOURCE)

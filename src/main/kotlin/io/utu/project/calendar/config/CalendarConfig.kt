@@ -1,4 +1,4 @@
-package io.utu.project.calendar.coonfig
+package io.utu.project.calendar.config
 
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.ComponentScan

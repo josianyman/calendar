@@ -5,12 +5,14 @@ import io.utu.project.calendar.api.ReservationSetName
 import io.utu.project.calendar.api.ReservationSetResource
 import io.utu.project.calendar.api.ReservationSetTimes
 import io.utu.project.calendar.api.ReservationState
+import io.utu.project.calendar.api.ResourceAvailabilityApi
 import io.utu.project.calendar.implementation.entity.ReservationEntity
 import io.utu.project.calendar.implementation.repository.ReservationRepository
 import java.util.UUID
 
 abstract class ReservationMapper {
     protected abstract val repository: ReservationRepository
+    protected abstract val availabilityReader: ResourceAvailabilityApi
 
     protected fun ReservationCreate.toEntity(): ReservationEntity = ReservationEntity(
         resourceId = this.resourceId,
@@ -50,6 +52,13 @@ abstract class ReservationMapper {
 
     protected fun ReservationEntity.requireDraftState(): ReservationEntity {
         require(state == ReservationState.DRAFT) { "Only draft reservation could be confirmed!" }
+        return this
+    }
+
+    protected fun ReservationEntity.requireResourceAvailable(): ReservationEntity {
+        require(availabilityReader.isAvailableFor(this)) {
+            "Resource is already reserved!"
+        }
         return this
     }
 
